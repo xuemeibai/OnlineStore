@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" type="text/css" href="../../static/onlinestore/item_details.css">
+    
+    <!-- enable ajax comment -->
+   
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			crossorigin="anonymous"></script>
+    <title>Item Details</title>
+
+    <script type="text/javascript" src="{% static 'onlinestore/js/item_details.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHKOpFT1fq-RF89k7sGzaHkD6qOZyy718&callback=initMap" async defer></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+            <a class="nav-link active" href="#">Details</a>
+            </li>
+            
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_profile' request.user.id %}">My Account</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'release' %}">Post new item</a>
+                <a class="dropdown-item" href="{% url 'favorites' %}">Favorites</a>
+                <a class="dropdown-item" href="{% url 'history_sells' %}">History sells</a>
+                <a class="dropdown-item" href="{% url 'history_orders' %}">History orders</a>
+                <a class="dropdown-item" href="{% url 'posting_items' %}">Posting items</a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'login' %}">Log out</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container" style="text-align: center;">
+                <div id="GoogleMap" style="min-height: 400px;width: 100%;margin-bottom: 20px;"></div>
+            </div>
+
+    <div class="product_details">
+        <div class="container">
+            <div class="row details_row">
+                <!-- Product Image -->
+				<div class="col-lg-6" style="text-align: center">
+                    <img src="{% url 'get_photo' item.id %}" alt="Card image cap" style="width: 100%;object-fit: scale-down; height: 35vh;">
+                </div>
+
+                <!-- Product Content -->
+                <div class="col-lg-6">
+					<div class="details_content">
+                        <div id='name' class="details_name">{{item.name}}</div>
+                        <!-- <div class="details_discount">$890</div> -->
+                        <div id='price' class="details_price">{{item.price}}</div>
+                        <div id='condition' class="">{{item.condition_value}}</div>
+                        <p hidden id="lat">{{item.lat}}</p>
+                        <p hidden id="lng">{{item.lng}}</p>
+                        <p hidden id='img'>{{item.id}}</p>
+
+						<!-- In Stock -->
+						<div class="in_stock_container">
+                            <div class="availability">Status:</div>
+                            {% if item.status %}
+                            <span>Traded</span>
+                            {% else %}
+                            <span>In Stock</span>
+                            {% endif %}
+                            
+                            {% if not item.status %}
+                            {% if item in user.profile.requested_items.all %}
+                            <span>You've requested for this item</span>
+                            {% endif %}
+                            {% endif %}
+
+                        </div>
+
+                        <div class="in_stock_container">
+                            <div class="availability">Owner:</div>
+                            <span><a href="{% url 'user_profile'  item.owner.id %}">{{item.owner.first_name}} {{item.owner.last_name}}</a></span>
+                        </div>
+                        
+						<div class="details_description">
+                            {% if error %}
+                                error: {{error}}    
+                                <hr>
+                            {% endif %}
+							<p>{{item.description}}</p>
+						</div>
+                        
+                        <hr>
+                        {% if user != item.owner %}
+                            {% if item.status %}
+                                {% if item.sold_to == user %}
+                                    <div >You've bought this item from
+                                        <a href="{% url 'user_profile'  item.owner.id %}">{{item.owner.first_name}} {{item.owner.last_name}}</a>
+                                    </div>
+
+                                    {% if not item.have_buyer_rated %}
+                                        <div>
+                                            <h6> Please rate your trade (1~5 points) with 
+                                                <a href="{% url 'user_profile' item.owner.id %}">{{item.owner.first_name}} {{item.owner.last_name}}</a></h6>
+                                        </div>
+
+                                        <form enctype="multipart/form-data" method="post" action="{% url 'rate' item.id %}">
+                                            <div class="select-list">
+                                                <select name="owner_rate" id="id_owner_rate" required autofocus>
+                                                    <option value="">Rate for item owner</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit">Submit</button>
+                                            {% csrf_token %}
+                                        </form>
+                                    {% else %}
+                                        <div>
+                                            <h5>You've rated 
+                                                <a href="{% url 'user_profile'  item.owner.id %}">{{item.owner.first_name}} {{item.owner.last_name}}</a>
+                                                for {{item.owner_rate}}
+                                            </h5>
+                                        </div>
+                                    {% endif %}
+
+                                {% else %}
+                                    <div >Sorry, the item has been traded.</div>
+                                {% endif %}
+                            {% else %}
+
+                                <h5>You can:</h5>
+                                {% if item in profile.favorite.all %}
+                                <div ><a href="{% url 'delete_from_favorite' item.id %}">Delete from Favorites</a></div>
+                                {% else %}
+                                <div ><a href="{% url 'add_to_favorite' item.id %}">Add to Favorites</a></div>
+                                {% endif %}
+
+                                {% if profile in item.requests.all %}
+                                <div ><a href="{% url 'cancel_trade_request' item.id %}">cancel_trade_request</a></div>
+                                {% else %}
+                                <div ><a href="{% url 'request_for_trade' item.id %}">Request for trade</a></div>
+                                {% endif %}
+
+                                <hr>
+                                <div>Currently {{item.num_of_views}} views, hurry up!</div>
+
+                            {% endif %}
+                        
+                        {% else %}
+                            {% if not item.status %}
+                                <h5>Please select a buyer below to trade</h5>
+                                {% for request in item.requests.all %}
+                                <div ><a href="{% url 'user_profile' request.id %}">{{request.user.username}}</a> -- 
+                                    <a href="{% url 'accept_request' item.id request.user.id %}">Accept</a>
+                                </div>
+                                {% endfor %}
+
+                                <hr>
+                                <h5>Operations:</h5>
+                                <div ><a href="{% url 'delete_item' item.id %}">Delete This Item</a></div>
+                                
+                            {% else %}
+                                <div >You've sold your item to 
+                                    <a href="{% url 'user_profile'  item.sold_to.id %}">{{item.sold_to.first_name}} {{item.sold_to.last_name}}</a>
+                                </div>
+
+                                {% if not item.have_owner_rated %}
+                                    <div>
+                                        <h6> Please rate your trade (1~5 points) with 
+                                        <a href="{% url 'user_profile'  item.sold_to.id %}">{{item.sold_to.first_name}} {{item.sold_to.last_name}}</a></h6>
+                                    </div>
+
+                                    <form enctype="multipart/form-data" method="post" action="{% url 'rate' item.id %}">
+                                        <div class="select-list">
+                                            <select name="buyer_rate" id="id_buyer_rate" required autofocus>
+                                                <option value="">Rate for item buyer</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit">Submit</button>
+                                        {% csrf_token %}
+                                    </form>
+                                {% else %}
+                                    <div>
+                                        <h5>You've rated 
+                                            <a href="{% url 'user_profile'  item.sold_to.id %}">{{item.sold_to.first_name}} {{item.sold_to.last_name}}</a>
+                                            for {{item.buyer_rate}}
+                                        </h5>
+                                    </div>
+                                {% endif %}
+
+                            
+                            {% endif %}
+                        
+                        {% endif %}
+					</div>
+				</div>
+            </div>
+
+            <div class="row comment_row">
+                <div class="col">
+                    <div class="comment_title_container">
+						<div class="comment_title">Comments</div>
+                    </div>
+
+                    <div id="comment_area_in_item_{{item.id}}" class="comment_area">
+                        <table>
+                            <tr>
+                                <td>Add Your Comment here:</td>
+                                <td><input type="text" maxlength="140" required id="id_post_input_text"></td>
+                                <td>
+                                    <button type="submit" id="id_post_button" onclick="addPost('{{item.id}}')">Submit</button>
+                                </td>
+                                <td class="errorlist" id="new_post_error"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div>
+                        <ul id="global_posts">
+                            {% for post in posts %}
+                            <li> 
+                                <div id="post_{{post.id}}" class="posts">
+                                    Post by
+                                    <a href="{% url 'user_profile' post.created_by.id %}" id="id_post_profile_{{post.id}}">
+                                        {{post.created_by.user.first_name}} {{post.created_by.user.last_name}}
+                                    </a>
+                                    <span id="id_post_text_{{post.id}}"> -- {{post.post_input_text}} -- </span>
+                                
+                                    <span id="id_post_date_time_{{post.id}}"> {{post.creation_time}}</span>
+                                </div>
+                                
+                                <div id="comment_in_post_{{post.id}}" class="comments">
+                                    {% for comment in post.comments.all %}
+                                        <div>
+                                            Comment by
+                                            <a href="{% url 'user_profile' comment.created_by.id %}" id="id_comment_profile_{{comment.id}}">
+                                                {{comment.created_by.user.first_name}} {{comment.created_by.user.last_name}}
+                                            </a>
+                                            <span id="id_comment_text_{{comment.id}}"> -- {{comment.content}} -- </span>
+                
+                                            <span id="id_comment_date_time_{{comment.id}}"> {{comment.creation_time}}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                
+                                <div id="comment_area_in_post_{{post.id}}" class="comment_area">
+                                    <table>
+                                        <tr>
+                                            <td>Comment:</td>
+                                            <td><input type="text" maxlength="140" required id="id_comment_input_text_{{post.id}}"></td>
+                                            <td>
+                                                <button type="submit" id="id_comment_button_{{post.id}}" onclick="addComment('{{post.id}}')">Submit</button>
+                                            </td>
+                                            <td class="errorlist" id="new_comment_error_{{post.id}}"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'onlinestore/js/item_comments_refresh.js' %}" type="text/javascript"></script>
+</body>
+
+</html>

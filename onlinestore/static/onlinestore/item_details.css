@@ -1,0 +1,82 @@
+.in_stock_container
+{
+	margin-top: 10px;
+}
+.availability
+{
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	color: #6c6a74;
+}
+.in_stock_container span
+{
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	color: #44a038;
+	margin-left: 5px;
+}
+
+.details_name
+{
+	font-size: 24px;
+	font-weight: 500;
+	color: #1b1b1b;
+	margin-top: -9px;
+}
+
+.details_price
+{
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 500;
+	color: #6c6a74;
+	margin-top: 12px;
+}
+
+.details_description
+{
+	margin-top: 20px;
+}
+.details_description p
+{
+	font-weight: 500;
+}
+
+
+.comment_row
+{
+	margin-top: 91px;
+}
+.comment_title
+{
+	display: inline-block;
+	font-size: 24px;
+	font-weight: 500;
+	color: #1b1b1b;
+}
+.reviews_title
+{
+	display: inline-block;
+	margin-left: 41px;
+}
+.reviews_title a
+{
+	font-size: 24px;
+	font-weight: 500;
+	color: #6c6a74;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.reviews_title a:hover
+{
+	color: #1b1b1b;
+}
+.description_text
+{
+	margin-top: 44px;
+}

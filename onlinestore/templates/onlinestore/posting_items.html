@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <title>PickUrs</title>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+          <a class="nav-link active" href="#">Posting items</a>
+          </li>
+          
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_profile' request.user.id %}">My Account</a>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'release' %}">Post new item</a>
+                  <a class="dropdown-item" href="{% url 'favorites' %}">Favorites</a>
+                  <a class="dropdown-item" href="{% url 'history_orders' %}">History orders</a>
+                  <a class="dropdown-item" href="{% url 'history_sells' %}">History sells</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+              </div>
+          </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      {% for item in items %}
+        {% if forloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+          <div class="col-sm-4" >
+              <div class="card">
+                  <img class="card-img-top" src="{% url 'get_photo' item.id %}" alt="Card image cap" style="height: 15vw; object-fit: scale-down;">
+                  <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="card-text">Price: {{item.price}}</p>
+                  <p class="card-text"> </p>Post by: <a href="{% url 'user_profile' item.owner.id %}" class="card-link"> {{item.owner.username}} </a> </p>
+                  <a href="{% url 'item_details' item.id %}" class="btn btn-primary">See item detail</a>
+                  </div>
+              </div>
+          </div>
+        {%  if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing --><hr>{%  endif %}
+      {% endfor %}
+    </div>
+
+
+  </body>
+</html>

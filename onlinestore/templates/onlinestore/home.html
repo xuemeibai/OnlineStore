@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pickurs</title>
+    {% load static %}
+	<meta charset="UTF-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'onlinestore/login_base.css' %}" rel="stylesheet" type="text/css">
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/flaticon.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/slicknav.min.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/animate.css"/>
+	<link rel="stylesheet" href="../../static/onlinestore/home/css/style.css"/>
+
+     <!-- favorite -->
+    <link rel="stylesheet" type="text/css" href="../../static/onlinestore/favorite.css">
+    <script src="../../static/onlinestore/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="../../static/onlinestore/js/favorite_btn.js" type="text/javascript"></script>
+    <style type="text/css">
+        .heart {
+        background: url("{% static 'onlinestore/web_heart_animation.png' %}");
+        background-position: left;
+        background-repeat: no-repeat;
+        height: 80px;
+        width: 80px;
+        cursor: pointer;
+        position: absolute;
+        top: 265px;
+        right: 5px;
+        background-size:2900%;
+        z-index: 9999;
+    }
+    </style>
+        <!-- Hero section end -->
+    <script src="{% static 'onlinestore/home/js/jquery-1.12.4.min.js' %}"></script> 
+    <script type="text/javascript">
+    $(window).load(function () {
+        $(".trigger_popup_fricc").click(function(){
+           $('.hover_bkgr_fricc').fadeIn(500);
+        });
+        $(".trigger_popup_login").click(function(){
+           $('.hover_bkgr_login').fadeIn(500);
+        });
+        $('.popupCloseButton').click(function(){
+            $('.hover_bkgr_fricc').hide();
+        });
+        $('.popupCloseButtonLogin').click(function(){
+            $('.hover_bkgr_login').hide();
+        });
+    });
+    </script>
+</head>
+
+<body bgcolor="#A6FFFF">
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+    <!-- Login Popup -->
+    {% if not request.user.is_authenticated %}
+    <div class="modal fade subscribe_popup" id="onload-popup" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;border-radius: 20px;"> 
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="border-radius: 20px;">
+            <div class="modal-content" style="width: 450px;position: relative;left: 21%;border-radius: 20px;">
+                <div class="card-body" style="border-radius: 20px;background-color: #fff">
+                  <h3 class="card-title text-center">Login</h3>
+                  <form class="form-signin" method="post" action="{% url 'login' %}">
+                    <div class="form-label-group">
+                      <input type="text" id="id_username" class="form-control" placeholder="Username" required autofocus name="username">
+                      <label for="username" id="id_username">Username</label>
+                    </div>                 
+                    <hr>     
+                    <div class="form-label-group">
+                      <input type="password" id="id_password" class="form-control" placeholder="Password" required name="password">
+                      <label for="password" id="id_password">Password</label>
+                    </div>     
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: #fff;color: #000;border-width: 3px;">Login</button>
+                    <a class="d-block text-center mt-2 medium" href="{% url 'register' %}">Not registered? Create an account</a>                    
+                    <hr class="my-4">
+                    {% csrf_token %}
+                    <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit" style="color: #fff;">Login with Google</button>
+                    <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit" style="position: relative; right: 10px;color: #fff">Login with Facebook</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="hover_bkgr_login">
+        <div class="card-body" style="border-radius: 20px;background-color: #fff;height: 520px;">
+            
+          <h3 class="card-title text-center">Login</h3>
+          <form class="form-signin" method="post" action="{% url 'login' %}">
+            <div class="form-label-group" style="text-align: left;">
+              <input type="text" id="id_username" class="form-control" placeholder="Username" required autofocus name="username">
+              <label for="username" id="id_username">Username</label>
+            </div>                 
+            <hr>     
+            <div class="form-label-group" style="text-align: left;">
+              <input type="password" id="id_password" class="form-control" placeholder="Password" required name="password">
+              <label for="password" id="id_password">Password</label>
+            </div>     
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: #fff;color: #000;border-width: 3px;">Login</button>
+            <a class="d-block text-center mt-2 medium" href="{% url 'register' %}">Not registered? Create an account</a>                    
+            <hr class="my-4">
+            {% csrf_token %}
+            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit" style="color: #fff;">Login with Google</button>
+            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit" style="position: relative; right: 10px;color: #fff">Login with Facebook</button>
+          </form>
+          <div class="popupCloseButtonLogin">&times;</div>
+        </div>       
+    </div>
+	<!-- Header section -->
+	<header class="header-section" style="z-index: 9999;">
+		<div class="header-top" style="background-color: rgba(0,0,1,0);z-index: 9999;">
+			<div class="container" style="z-index: 9999;">
+				<div class="row" style="z-index: 9999;">
+					<div class="col-lg-2 text-center text-lg-left" style="z-index: 9999;">
+						<!-- logo -->
+						<a href="{% url 'home' %}" class="site-logo" style="z-index: 9999;">
+							<img src="{% static 'onlinestore/pickurs.png' %}" alt="" style="z-index: 9999;">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5" style="z-index: 9999;z-index: 9999;">
+						<form class="header-search-form" style="z-index: 9999;z-index: 9999;" method="get" action="{% url 'search' %}">
+							<input type="text" placeholder="Search on PickUrs ...." style="z-index: 9999;" name='q'>
+							<button type="submit" style="z-index: 9999;"><i class="flaticon-search" style="z-index: 9999;"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5" style="color: #ffffff;z-index: 9999;">
+						<div class="user-panel" style="color: #ffffff;z-index: 9999;width: 500px;">
+							<div class="up-item" style="z-index: 9999;">
+								<i class="flaticon-profile"></i>
+								{% if request.user.is_authenticated %}
+                                <a href="{% url 'logout' %}" style="color: #ffffff;z-index: 9999;">Sign Out</a>
+                                {% else %}
+                                <a href="{% url 'login' %}" style="color: #ffffff;z-index: 9999;">Sign</a> In or <a href="{% url 'register' %}" style="color: #ffffff;z-index: 9999;">Create Account</a>
+                                {% endif %}
+							</div>
+                            <div class="up-item" style="z-index: 9999;margin-right: 25px;">
+                                <div class="shopping-card" style="z-index: 9999;">
+                                    <i class="flaticon-shopping-cart" style="z-index: 9999;"></i>
+                                    <span style="z-index: 9999;">{{cart_num}}</span>
+                                </div>
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'my_cart' %}" style="color: #ffffff;z-index: 9999;">My Cart</a>
+                                {% else %}
+                                <a class="trigger_popup_login" href="#" style="color: #ffffff;z-index: 9999;">My Cart</a>
+                                {% endif %}
+                            </div>
+							<div class="up-item" style="z-index: 9999;">
+								<div class="shopping-card" style="z-index: 9999;">
+									<i class="flaticon-heart" style="z-index: 9999;"></i>
+									<span style="z-index: 9999;">{{favorite}}</span>
+								</div>
+                                {% if request.user.is_authenticated %}
+								<a href="{% url 'favorites' %}" style="color: #ffffff;z-index: 9999;">My Favorite</a>
+                                {% else %}
+                                <a class="trigger_popup_login" href="#" style="color: #ffffff;z-index: 9999;">My Favorite</a>
+                                {% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<header class="header_wrap fixed-top dd_dark_skin transparent_header">
+    		<div class="light_skin main_menu_uppercase">
+				<div class="main-navbar" style="background-color: rgba(0,0,1,0);z-index: 9999;">
+					<div class="container" style="z-index: 9999;">
+						<!-- menu -->
+						<ul class="main-menu" style="z-index: 9999;">
+							<li><a href="{% url 'home' %}" style="z-index: 9999;">Home</a></li>
+							<li><a href="#" style="z-index: 9999;">Category</a>
+								<ul class="sub-menu" style="width: 120px;">
+									<li><a href="{% url 'category' 0 %}" style="z-index: 9999;">Furnitures</a></li>
+									<li><a href="{% url 'category' 1 %}" style="z-index: 9999;">Elctronics</a></li>
+									<li><a href="{% url 'category' 2 %}" style="z-index: 9999;">Others</a></li>
+								</ul>
+							</li>
+							<li><a href="" style="z-index: 9999;">Sort by</a>
+								<ul class="sub-menu" style="width: 250px;">
+									<li><a href="{% url 'sort' 0 %}" style="z-index: 9999;">Price: Low to High</a></li>
+									<li><a href="{% url 'sort' 1 %}" style="z-index: 9999;">Price: High to Low</a></li>
+									<li><a href="{% url 'sort' 2 %}" style="z-index: 9999;">Release Time: New to Old</a></li>
+									<li><a href="{% url 'sort' 3 %}" style="z-index: 9999;">Release Time: Old to New</a></li>
+								</ul>
+							</li>
+                            {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'release' %}" style="z-index: 9999;">Post My Item</a></li>
+                            {% else %}
+                            <li class="trigger_popup_login"><a href="#" style="z-index: 9999;">Post My Item</a></li>
+                            {% endif %}
+							<li style="position: relative; left: 550px;">
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'user_profile' request.user.id %}" style="z-index: 9999;">My Account</a>
+                                <ul class="sub-menu" style="width: 160px;">
+                                    <li><a href="{% url 'posting_items' %}" style="z-index: 9999;">My Posting</a></li>
+                                    <li><a href="{% url 'history_sells' %}" style="z-index: 9999;">History Sold</a></li>
+                                    <li><a href="{% url 'history_orders' %}" style="z-index: 9999;">History Bought</a></li>
+                                </ul>
+                                {% else %}
+                                <a class="trigger_popup_login" href="#" style="z-index: 9999;">My Account</a>
+								<ul class="sub-menu" style="width: 160px;">
+									<li><a class="trigger_popup_login" href="#" style="z-index: 9999;">My Posting</a></li>
+									<li><a class="trigger_popup_login" href="#" style="z-index: 9999;">History Sold</a></li>
+									<li><a class="trigger_popup_login" href="#" style="z-index: 9999;">History Bought</a></li>
+								</ul>
+                                {% endif %}
+                            </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+	</header>
+	<!-- Header section end -->
+
+	<!-- Hero section -->
+	<section class="hero-section" style="padding: 0px 0px 0px;">
+		<div class="hero-slider owl-carousel" style="position: relative;top: -80px;z-index: 0;background-color: #000;height: 1050px;">
+			<div class="hs-item set-bg" data-setbg="{% static 'onlinestore/home_1.png' %}" style="height: 1050px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-6 col-lg-7 text-white">
+							<span style="">New Arrivals</span>
+							<h2>{{ad1.name}}</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                            {% if request.user.is_authenticated and num >= 1 %}
+                                <a href="{% url 'item_details' ad1.id %}" class="site-btn sb-line">DISCOVER</a>
+                                {% if ad1 in profile.favorite.all %}
+                                <a href="{% url 'delete_from_favorite' ad1.id %}" class="site-btn sb-white">DELETE FROM FAVORITE</a>
+                                {% else %}
+                                <a href="{% url 'add_to_favorite' ad1.id %}" class="site-btn sb-white">ADD TO FAVORITE</a>
+                                {% endif %}
+                            {% else %}
+                                <a href="#" class="site-btn sb-line" style="border-width: 3px;">DISCOVER</a>
+                                <a href="#" class="site-btn sb-white">ADD TO FAVORITE</a>
+                            {% endif %}
+						</div>
+					</div>
+					<div class="offer-card text-white" style="margin-top: 30px;">
+						<h4>Now</h4>
+						<h2>${{ad1.price}}</h2>
+                        {% if ad1.original_price %}
+						<h4 style="position: relative; bottom: 10px;"><del>${{ad1.original_price}}</del></h4>
+                        {% else %}
+                        <h4 style="position: relative; bottom: 10px;"><del>$None</del></h4>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="hs-item set-bg" data-setbg="{% static 'onlinestore/home_2.png' %}" style="height: 1050px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-6 col-lg-7 text-white">
+							<span>New Arrivals</span>
+							<h2>{{ad2.name}}</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                            {% if request.user.is_authenticated and num >= 2 %}
+                                <a href="{% url 'item_details' ad2.id %}" class="site-btn sb-line">DISCOVER</a>
+                                {% if ad2 in profile.favorite.all %}
+    							<a href="{% url 'delete_from_favorite' ad2.id %}" class="site-btn sb-white">DELETE FROM FAVORITE</a>
+                                {% else %}
+                                <a href="{% url 'add_to_favorite' ad2.id %}" class="site-btn sb-white">ADD TO FAVORITE</a>
+                                {% endif %}
+                            {% else %}
+                                <a href="#" class="site-btn sb-line" style="border-width: 3px;">DISCOVER</a>
+                                <a href="#" class="site-btn sb-white">ADD TO FAVORITE</a>
+                            {% endif %}
+						</div>
+					</div>
+					<div class="offer-card text-white" style="margin-top: 30px;">
+						<h4>Now</h4>
+						<h2>${{ad2.price}}</h2>
+                        {% if ad2.original_price %}
+						<h4 style="position: relative; bottom: 10px;"><del>${{ad2.original_price}}</del></h4>
+                        {% else %}
+                        <h4 style="position: relative; bottom: 10px;"><del>$None</del></h4>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>		
+	</section>
+
+	<!-- Google Map -->
+    <p hidden id="is_login">{{request.user.is_authenticated}}</p>
+	<div class="container-fluid" style="width: 900px;height: 50px;position: relative;" >
+		<a class="trigger_popup_fricc"><h2 style="text-align: center;color: #ffffff;position:relative;top: -300px;z-index: 100">PickUrs On The Map</h2></a>
+	</div>
+	<div class="hover_bkgr_fricc">
+    	<span class="helper"></span>
+	    <div style="padding: 0px 0px 0px;">
+	        <div class="popupCloseButton">&times;</div>
+            <div id="GoogleMap" style="height: 600px;border-radius: 20px;"></div>
+	    </div>
+	</div>
+	</body>
+	<!-- Google Map -->
+
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="{% static 'onlinestore/home/css/card.css' %}">
+
+	<!-- START SECTION SHOP -->
+	<div class="section small_pt pb_70" style="position: relative;top: -120px;background-color: #ffffff">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+	                <div class="heading_s4 text-center">
+	                    <h2 style="font-size: 50px;font-weight: 600;">Pick Ur Items</h2>
+	                </div>
+	                <p class="text-center leads">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit massa enim Nullam nunc varius.</p>
+	            </div>
+			</div>
+	        <div class="row shop_container">
+                {% for item in items %}
+	            <div class="col-lg-3 col-md-4 col-6">
+                    <p hidden id="price{{forloop.counter}}">{{item.price}}</p>
+                    <p hidden id='img{{forloop.counter}}'>{{item.id}}</p>
+                    <p hidden id="lat{{forloop.counter}}">{{item.lat}}</p>
+                    <p hidden id="lng{{forloop.counter}}">{{item.lng}}</p>
+	                <div class="product_box text-center" style="height: 400px">
+	                    <div class="product_img">
+	                        <a href="#">
+	                            <img id="picture{{forloop.counter}}" src="{% url 'get_photo' item.id %}" alt="furniture_img1"  style="height: 280px">
+	                        </a>
+	                        <div class="product_action_box">
+	                            <ul class="list_none pr_action_btn">
+                                    {% if request.user.is_authenticated %}
+	                                <li><a href="{% url 'item_details' item.id %}"><i class="flaticon-zoom"></i></a></li>
+                                    {% else %}
+                                    <li><a href="#"><i class="flaticon-zoom"></i></a></li>
+                                    {% endif %}
+	                            </ul>
+	                        </div>
+	                    </div>
+                        {% if request.user.is_authenticated %}
+                        <div class="heart " id="{{forloop.counter}}" rel="like" value='{{forloop.counter}}'></div>
+                        {% endif %}
+	                    <div class="product_info">
+	                        <h4 id="name{{forloop.counter}}" class="product_title">{{item.name}}</h4>
+                                {% if item in profile.favorite.all %}
+                                <p hidden id='favorite{{forloop.counter}}'>1</p>
+                                <p hidden class="card-text" id="delete{{forloop.counter}}"><a href="{% url 'delete_from_favorite_home'%}" id='delete'>Delete from Favorites</a></p>
+                                {% else %}
+                                <p hidden id='favorite{{forloop.counter}}'>0</p>
+                                <p hidden class="card-text" id="add{{forloop.counter}}"><a href="{% url 'add_to_favorite_home'%}" id='add'>Add to Favorites</a></p>
+                                {% endif %}
+	                        <div class="product_price">
+	                            <span class="price">${{item.price}}</span>
+                                {% if item.original_price %}
+	                            <del>${{item.original_price}}</del>
+                                {% endif %}
+	                        </div>
+                                <h6 id="condition{{forloop.counter}}" class="card-text" style="position: relative; bottom: 8px;">Condition: {{item.condition_value}}</h6>
+                                {% if request.user.is_authenticated %}
+                                <h6 style="position: relative; bottom: 8px;" class="card-text">Post by: <a href="{% url 'user_profile' item.owner.id %}" class="card-link">{{item.owner.username}}</a></h6>
+                                {% else %}
+                                <h6 style="position: relative; bottom: 8px;" class="card-text">Post by: <a href="#" class="card-link">{{item.owner.username}}</a></h6>
+                                {% endif %}
+	                        <div class="add-to-cart" style="position: relative; bottom: 95px;">
+                                {% if request.user.is_authenticated %}
+	                            <a href="{% url 'item_details' item.id %}" class="btn btn-gd-grey btn-radius">Item Details</a>
+                                {% else %}
+                                <a href="#" class="btn btn-gd-grey btn-radius">Item Details</a>
+                                {% endif %}
+	                        </div>
+	                    </div>
+	                </div> 
+	            </div>
+                {% endfor %}
+                <p hidden id="num">{{num}}</p>
+	        </div> 
+	    </div>
+	</div>
+	<!-- END SECTION SHOP -->
+
+	<!-- Footer section -->
+	<section class="footer-section">
+		<div class="container">
+			<div class="footer-logo text-center" style="height: 50px;top: -50px;">
+				<a href="{% url 'home' %}"><img src="{% static 'onlinestore/pickurs.png' %}" alt="" style="height: 50px;"></a>
+			</div>
+			<div class="footer-logo text-center" style="top: -50px;">
+				<h4 style="color: #FFFFFF">Contact Info</h4>
+				<h7 style="color: #FFFFFF">Carnegie Mellon University</h7>
+				<h7 style="color: #FFFFFF">5000 Forbes Avenue</h7>
+				<h7 style="color: #FFFFFF">Pittsburgh, PA 15213<br></h7>
+				<h7 style="color: #FFFFFF">Email: PickUrs@gmail.com<br></h7>
+				<label style="color: #FFFFFF">Phone: (215)-328-6079</label></div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer section end -->
+	<!--Javascripts & Jquery-->
+	<script src="../../static/onlinestore/home/js/jquery-3.2.1.min.js"></script>
+	<script src="../../static/onlinestore/home/js/bootstrap.min.js"></script>
+	<script src="../../static/onlinestore/home/js/jquery.slicknav.min.js"></script>
+	<script src="../../static/onlinestore/home/js/owl.carousel.min.js"></script>
+	<script src="../../static/onlinestore/home/js/jquery.nicescroll.min.js"></script>
+	<script src="../../static/onlinestore/home/js/jquery.zoom.min.js"></script>
+	<script src="../../static/onlinestore/home/js/jquery-ui.min.js"></script>
+	<script src="../../static/onlinestore/home/js/main.js"></script>
+	<script src="../../static/onlinestore/home/js/jquery-1.12.4.min.js"></script> 
+	<script src="../../static/onlinestore/home/js/scripts.js"></script>
+    <!-- Latest jQuery --> 
+    <script src="../../static/onlinestore/home/js/jquery-1.12.4.min.js.download"></script> 
+    <script src="../../static/onlinestore/home/js/bootstrap.min.js.download"></script> 
+    <script src="../../static/onlinestore/home/js/magnific-popup.min.js.download"></script> 
+    <script src="../../static/onlinestore/home/js/parallax.js.download"></script> 
+    <script src="../../static/onlinestore/home/js/jquery.countdown.min.js.download"></script> 
+    <script src="../../static/onlinestore/home/js/jquery.dd.min.js.download"></script>
+    <script src="../../static/onlinestore/home/js/slick.min.js.download"></script>
+    <script src="../../static/onlinestore/home/js/jquery.elevatezoom.js.download"></script>
+    <script src="../../static/onlinestore/home/js/scripts.js.download"></script>
+    <!-- Goolgemap -->
+    <script type="text/javascript" src="{% static 'onlinestore/js/map.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHKOpFT1fq-RF89k7sGzaHkD6qOZyy718&callback=initMap" async defer></script>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    {% load static %}
+    <title>Userpfofile</title>
+	<script src="../../static/onlinestore/js/userprofile.js" type="text/javascript"></script>
+    <!--<script src="./userprofile/wp-emoji-release.min.js.download" type="text/javascript" defer=""></script>-->
+	<style scr="../../static/onlinestore/userprofile/userprofile.css" type="text/css"></style>
+    <link rel="stylesheet" id="css-0-css" href="../../static/onlinestore/userprofile/4d8aacec-1585891002.min.css" type="text/css" media="all">
+    <link rel="stylesheet" id="css-1-css" href="../../static/onlinestore/userprofile/c35d421a-1585890976.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../../static/onlinestore/home/css/flaticon.css"/>
+    <script type="text/javascript" src="../../static/onlinestore/userprofile/70851e2e-1585891002.min.js.download"></script>
+    <style type="text/css">
+        .enlarge{
+            width: 300px;
+            height: 320px;
+            border: 1px #ffffff solid;
+        }
+        .enlarge img{
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.6s;
+            -ms-transition: all 0.8s;
+        }
+    </style>
+</head>
+
+<body data-rsssl="1" class="home page-template-default page page-id-157 wp-embed-responsive masthead-fixed full-width grid">
+
+<div class="lm-animated-bg transition" style="background-position: calc(50% + 1.11084px) calc(50% + 4.11758px);"></div>
+    
+<!-- Loading animation -->
+<div class="preloader" style="display: none;">
+  <div class="preloader-animation">
+    <div class="preloader-spinner">
+    </div>
+  </div>
+</div>
+
+<!-- Scroll To Top Button -->
+<div class="lmpixels-scroll-to-top hidden-btn"><i class="lnr lnr-chevron-up"></i></div>
+
+<div class="page-scroll">
+    <div id="page_container" class="page-container bg-move-effect theme-style-light animated transition-flip-in-right" data-animation="transition-flip-in-right">
+
+        <!-- Header -->
+        <header id="site_header" class="header">
+            <div class="header-content clearfix">
+                
+                <!-- Text Logo -->
+                <div class="text-logo">
+                    <a href="{% url 'home' %}">
+                        <div class="logo-symbol">P</div>
+                        <div class="logo-text">PickUrs <span></span></div>
+                    </a>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="site-nav mobile-menu-hide">
+                    <ul id="menu-classic-menu" class="leven-classic-menu site-main-menu">                      
+                        <li id="menu-item-191" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-191">
+                            <a href="{% url 'user_profile' request.user.id %}" data-hover="1">My Account</a>
+                        </li>
+                        <li id="menu-item-340" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-340">
+                            <a href="{% url 'favorites' %}" data-hover="1">My Favorite</a>
+                        </li>
+                        <li id="menu-item-333" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333">
+                            <a rel="noopener noreferrer" href="{% url 'release' %}" data-hover="1">Post New Item</a>
+                        </li>
+                    </ul>                
+                </div>
+
+                <a class="menu-toggle mobile-visible">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </header>
+        <!-- /Header -->
+
+<div class="fw-container">
+	<div class="row">
+	
+    <div class=" col-xs-12 col-sm-12 " style="width:1100px;">
+        <div id="col_inner_id-5e995cee316b6" class="fw-col-inner" data-paddings="15px 0px 15px 0px">
+    		
+            <div id="home_content_954218bfd87cb3b458721f4a70135965" class="home-content">
+                <div class="row flex-v-align">
+                    <div class="col-sm-12 col-md-5 col-lg-5">
+                        <div class="home-photo" style="width: 326px;height: 326px;">
+                            <div class="hp-inner transition">
+                                <img class="enlarge" src="{% url 'self_avatar' user_id %}">
+                            </div>
+                            {% if request.user.id == user_id %}
+                            <form enctype="multipart/form-data" action="{% url 'edit_profile' user.id %}" method="post">
+                            <input type="file" value="picture" name="profile_picture" style="height: 326px;width: 326px;opacity:0;cursor:pointer;" />
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-7 col-lg-7">
+                        <div class="home-text hp-left">
+                            
+                            <h1>{{first_name}} {{last_name}}</h1>
+
+                            {% if request.user.id == user_id %}
+                                {% if length == 0 %}
+                                <textarea oninput="auto_grow(this)" name="bio" style="font-size: 16px;border:none;width:420px;height:100px;resize: none;" placeholder="Edit your profile here: Fusce tempor magna mi, non egestas velit ultricies nec. Aenean convallis, risus non condimentum gravida, odio mauris ullamcorper felis, ut venenatis purus ex eu mi." onpropertychange="this.style.posHeight=this.scrollHeight"></textarea>
+                                {% else %}
+                                <textarea bodyonload="auto_grow(this)" name="bio" style="font-size: 16px;border:none;width:400px;resize: none;">{{bio}}</textarea>
+                                {% endif %}
+                                <h5>Credit: {{creditrate}} / 5.0</h5>
+                                <div class="home-buttons">
+                                    <input id="" type="submit" value="Submit" name="pic">
+                                </div>
+                                {% csrf_token %}
+                            </form>
+                            {% else %}
+                                {% if length == 0 %}
+                                <p name="bio" style="font-size: 16px;">Not edited yet: Fusce tempor magna mi, non egestas velit ultricies nec. Aenean convallis, risus non condimentum gravida, odio mauris ullamcorper felis, ut venenatis purus ex eu mi. Quisque imperdiet lacinia urna.</p>
+                                {% else %}
+                                <p name="bio" style="font-size: 16px;">{{bio}}</p>
+                                {% endif %}
+                                
+                                <h5>Credit: {{creditrate}} / 5.0</h5>
+                
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </div>
+    </div>
+
+    {% if request.user.id == user_id %}
+    <div class="row">
+        <div class=" col-xs-12 col-sm-12 ">
+            <div id="col_inner_id-5e995cee33064" class="fw-col-inner" data-paddings="0px 0px 0px 0px">		
+                <div class="block-title">
+                    <h2>About Myself</h2>
+                </div>
+        	</div>
+        </div>
+    </div>
+
+    <div class="row">    
+        <div class="  " onclick="window.location.href='{% url 'my_cart' %}';" style="width: 20%;padding: 2%;height: 10%;">
+            <div id="col_inner_id-5e995cee3340c" class="fw-col-inner" data-paddings="0px 0px 0px 0px" style="cursor:pointer;">      
+                <div class="lm-info-block gray-default">
+                    <i class="flaticon-shopping-cart"></i>
+                    <h4>My Cart</h4>
+                    <span class="lm-info-block-value">{{cart_num}}</span>
+                </div>
+            </div>
+        </div>	
+        <div class="  " onclick="window.location.href='{% url 'favorites' %}';" style="width: 20%;padding: 2%;height: 14%;">
+            <div id="col_inner_id-5e995cee3340c" class="fw-col-inner" data-paddings="0px 0px 0px 0px" style="cursor:pointer;">		
+                <div class="lm-info-block gray-default">
+                    <i class="linecons linecons-heart"></i>
+                    <h4>My Favorite</h4>
+                    <span class="lm-info-block-value">{{favorite}}</span>
+                </div>
+        	</div>
+        </div>
+        <div class="  " style="width: 20%;padding: 2%;height: 14%;">
+            <div id="col_inner_id-5e995cee336c7" onclick="window.location.href='{% url 'posting_items' %}';" class="fw-col-inner" data-paddings="0px 0px 0px 0px" style="cursor:pointer;">		
+                <div class="lm-info-block gray-default">
+                    <i class="linecons linecons-clock"></i>
+                    <h4>My Posting</h4>
+                    <span class="lm-info-block-value">{{posting}}</span>
+                </div>
+        	</div>
+        </div>
+        <div class="  " style="width: 20%;padding: 2%;height: 14%;">
+            <div id="col_inner_id-5e995cee33875" onclick="window.location.href='{% url 'history_orders' %}';" class="fw-col-inner" data-paddings="0px 0px 0px 0px" style="cursor:pointer;">		
+                <div class="lm-info-block gray-default">
+                    <i class="flaticon-bag"></i>
+                    <h4>History Bought</h4>
+                    <span class="lm-info-block-value">{{bought}}</span>
+                </div>
+        	</div>
+        </div>
+        <div class="  " style="width: 20%;padding: 2%;height: 14%;">
+            <div id="col_inner_id-5e995cee33a31" onclick="window.location.href='{% url 'history_sells' %}';" class="fw-col-inner" data-paddings="0px 0px 0px 0px" style="cursor:pointer;">		
+                <div class="lm-info-block gray-default">
+                    <i class="flaticon-credit-card"></i>
+                    <h4>History Sold</h4>
+                    <span class="lm-info-block-value">{{sold}}</span>
+                </div>
+        	</div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>

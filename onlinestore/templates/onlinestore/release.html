@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Release Form</title>
+    {% load static %}
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{%static 'fonts/material-icon/css/material-design-iconic-font.min.css'%}" type="text/css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="{%static 'onlinestore/style.css'%}" type="text/css">
+    <link rel="shortcut icon" href="#"/>
+
+    <script type="text/javascript" src="{% static 'onlinestore/js/release.js' %}">
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHKOpFT1fq-RF89k7sGzaHkD6qOZyy718&libraries=places&callback=initMap" async defer></script>
+</head>
+<body>
+
+    <div class="main">
+        <div class="container">
+            <div class="booking-content">
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box" style="height: 30px;">
+                <div id="GoogleMap" class="booking-image">
+                </div>
+                <div class="booking-form">
+                    <form enctype="multipart/form-data" method="post" action="{% url 'release'%}">
+                        <h2>Release your product!</h2>
+                        <div class="form-group form-input">
+                            <textarea type="text" class="form-control" id='id_lat' value="" placeholder="lat" required autofocus name='lat' rows='1' style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"></textarea>
+                            <textarea type="text" class="form-control" id='id_lng' value="" placeholder="lng" required autofocus name='lng' rows='1' style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"></textarea>
+                        </div>
+                        <div class="form-group form-input">
+                            <input type="text" class="form-control" placeholder="Product name" id="id_name" value="" required autofocus name="name" style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"/>
+                            <label for="name" id="id_name"></label>
+                        </div>
+                        <div class="form-group form-input">
+                            <input type="file" class="" placeholder="Product picture" id="id_picture" value="" required autofocus name="picture"/>
+                            <label for="picture" id="id_picture"></label>
+                        </div>
+                        <div class="form-group form-input">
+                            <input type="text" class="form-control" placeholder="Product introduction" id="id_description" value="" required autofocus name="description" style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"/>
+                            <label for="description" id="id_description"></label>
+                        </div>
+                        <div class="form-group">
+                            <div class="select-list">
+                              <select name="condition_value" id="id_condition_value" required autofocus>
+                                <!-- {% for key,value in new_item.CONDITION %}
+                                <option value="{{ value }}">{{ key }}</option>
+                                {% endfor %} -->
+                                <option value="">Degree of new</option>
+                                <option value="BrandNew">Brand New</option>
+                                    <option value="80%">80% New</option>
+                                    <option value="60%">60% New</option>
+                                    <option value="40%">40% New</option>
+                                    <option value="Old">Old</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="select-list">
+                              <select name="type_value" id="id_type_value" required autofocus>
+                                <option value="">Category</option>
+                                <option value="Furniture">Furniture</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-input">
+                            <input type="number" class="form-control" placeholder="Price" id="id_price" value="" required autofocus name="price" style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"/>
+                            <label for="price" id="id_price"></label>
+                        </div>
+                        <div class="form-group form-input">
+                            <input type="number" class="form-control" placeholder="Original Price" id="id_original_price" name="original_price" style="-webkit-box-shadow: 0 0 0px 1000px #111 inset !important;"/>
+                            <label for="original_price" id="id_original_price"></label>
+                        </div>
+                        <div class="form-submit" style="text-align:center">
+                            <button type="submit" class="submit" id="submit">Release Now</button>
+                            <a href="{% url 'home' %}" class="vertify-booking">Return home</a>
+                        </div>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="static/onlinestore/vendor/jquery/jquery.min.js"></script>
+    <script src="static/onlinestore/js/main.js"></script>
+</body>
+</html>
